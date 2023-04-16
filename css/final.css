@@ -5,23 +5,34 @@
     top: 0%;
     width: 1500px;
     height: 50px; */
+    height: 40px;
+    padding-top: 10px;
 
     
-    background: linear-gradient(180deg, #158eca 0%, rgba(90, 231, 23, 0) 100%);
+    background: #158eca ;
          }
   
   .nav li{
+
           display: inline;
           padding: 20px;
          }
   
   .nav a{
     font-size: 20px;
-    color: #000000;
+    color: #ffffff;
     text-decoration: none;
   }
   .nav button{
     float: right;
+    background-color: #158eca;
+    color: #ffffff;
+    border: 1px solid white;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+    margin-top: 0px;
+    margin-right: 10px;
+    border-radius: 10px;
   }
   
 
@@ -60,7 +71,7 @@
     .docs .heading {
         text-align: center;
   font-size: 30px;
-  color: #000000;
+  color: whie00;
   padding: 5px 0px 5px 0px;
 
   text-decoration: underline;
@@ -112,7 +123,7 @@
 	 position: absolute;
 	 top: 85%;
 	 left: 0;
-	 background-color: #15CA73;
+	 background-color: #158eca;
 	 height: 100px;
 	 line-height: 100px;
 	 width: 45px;
@@ -126,7 +137,7 @@
 	 position: absolute;
 	 top: 85%;
 	 right: 0;
-	 background-color: #15CA73;
+	 background-color: #158eca;
 	 height: 100px;
 	 line-height: 100px;
 	 width: 45px;
@@ -260,7 +271,7 @@ li {
   
   .searchTerm {
     width: 100%;
-    border: 3px solid #15CA73;
+    border: 3px solid #158eca;
     border-right: none;
     padding: 5px;
     height: 20px;
@@ -276,10 +287,10 @@ li {
   .searchButton {
     width: 40px;
     height: 36px;
-    border: 1px solid #15CA73;
-    background:  #15CA73;
+    border: 1px solid #158eca;
+    background:  #158eca;
     text-align: center;
-    color: #000000;
+    color: whie00;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-size: 20px;
@@ -304,8 +315,8 @@ li {
   }
   .btn 
   button{
-    color: #000000;
-    background-color: #15CA73;
+    color: whie00;
+    background-color: #158eca;
     font-size: 40px;
     margin-top: 20px;
     margin-bottom: 20px;
