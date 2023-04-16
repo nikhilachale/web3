@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/final.css">
     <link rel="stylesheet" href="/js/wallet.js">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <!----favicon-->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -23,9 +23,10 @@
             <li><a href="#">Home</a></li>
             <li><a href="#">Documents</a></li>
             <li><a href="#">Upload </a></li>
-            <li><a href="#" >Sign In</a></li>
+            <li><a href="#" id="right" >Sign In</a></li>
             <li><button id="wallet" onclick = "metamask()">connect</button></li>
           </ul>
+          
         </div>
     
 
@@ -488,9 +489,9 @@
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
   
     // Prompt user to switch to a specific network if not on it
-    if (chainId !== '5') { // change to your desired network id
-      alert('Please switch to the desired network to use this feature.');
-      return;
+    // if (chainId !== '5') { // change to your desired network id
+    //   alert('Please switch to the desired network to use this feature.');
+    //   return;
     }
   
     // Metamask is connected and on the desired network, do your logic here
@@ -507,134 +508,113 @@
 
   //function to upload documents
  // Replace the contract address and ABI with your own values
- const contractAddress = '0x27D48ddd444c25A48d0973C4d6503d8D5EdA1250';
-      const contractABI = [{
-		"inputs": [
-			{
-				"internalType": "contract IPFS",
-				"name": "_ipfs",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "bytes32",
-				"name": "_Filehash",
-				"type": "bytes32"
-			}
-		],
-		"name": "PdfStored",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "ipfsHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "storePDFHash",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes",
-				"name": "pdf",
-				"type": "bytes"
-			}
-		],
-		"name": "uploadFile",
-		"outputs": [
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "ipfsHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "downloadFile",
-		"outputs": [
-			{
-				"internalType": "bytes",
-				"name": "",
-				"type": "bytes"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "ipfsHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "getFileOwner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}];
-      
-      // Connect to the contract using Web3.js
-      const web3 = new Web3(Web3.givenProvider);
-      const contract = new web3.eth.Contract(contractABI, contractAddress);
-      
-      function uploadPDF() {
-        const pdfInput = document.getElementById('pdfInput');
-        const pdfFile = pdfInput.files[0];
-        
-        // Read the PDF file into a buffer
-        const reader = new FileReader();
-        reader.onload = async function(event) {
-          const pdfBuffer = event.target.result;
-          
-          // Upload the PDF to IPFS using the smart contract
-          const ipfsHash = await contract.methods.uploadFile(pdfBuffer).call();
-          
-          // Store the IPFS hash in the contract using the user's address as the key
-          await contract.methods.storePDFHash(ipfsHash).send({from: web3.eth.defaultAccount});
-          
-          // Update the status message
-          const status = document.getElementById('status');
-          status.textContent = `PDF uploaded to IPFS with hash ${ipfsHash}`;
-        };
-        reader.readAsArrayBuffer(pdfFile);
+ // Initialize the Web3 provider
+const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
+
+// Set the contract address and ABI
+const contractAddress = '0x27D48ddd444c25A48d0973C4d6503d8D5EdA1250';
+const contractABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "pdf",
+        "type": "bytes"
       }
- 
+    ],
+    "name": "uploadFile",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "ipfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getFileOwner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "ipfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "downloadFile",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "ipfsHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "storePDFHash",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
+
+// Initialize the contract object
+const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+// Add an event listener to the upload button
+const uploadButton = document.getElementById('uploadButton');
+uploadButton.addEventListener('click', async function() {
+  const pdfInput = document.getElementById('pdfInput');
+  const pdfFile = pdfInput.files[0];
+
+  // Read the PDF file into a buffer
+  const reader = new FileReader();
+  reader.onload = async function(event) {
+    const pdfBuffer = event.target.result;
+
+    // Upload the PDF to IPFS using the smart contract
+    const ipfsHash = await contract.methods.uploadFile(pdfBuffer).call();
+
+    // Store the IPFS hash in the contract using the user's address as the key
+    await contract.methods.storePDFHash(ipfsHash).send({from: web3.eth.defaultAccount});
+
+    // Get the CID of the file from the IPFS gateway
+    const cidResponse = await fetch(`https://ipfs.io/ipfs/${ipfsHash}`);
+    const cid = await cidResponse.text();
+
+    console.log(cid);
+  };
+
+  reader.readAsArrayBuffer(pdfFile);
+});
   
   
   

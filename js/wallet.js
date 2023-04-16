@@ -1,3 +1,5 @@
+//fucntion to connect wallet 
+
 
 import detectEthereumProvider from '@metamask/detect-provider';
 async function fun() {
@@ -30,7 +32,7 @@ async function fun() {
     }
   
     // Metamask is connected and on the desired network, do your logic here
-    // Example: get the user's address
+  
     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
     const address = accounts[0];
     console.log(`User address: ${address}`);

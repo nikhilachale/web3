@@ -23,6 +23,10 @@
     color: #ffffff;
     text-decoration: none;
   }
+   #right{
+    float: right;
+    padding:5px 10px 5px 10px; 
+  }
   .nav button{
     float: right;
     background-color: #158eca;
@@ -315,7 +319,7 @@ li {
   }
   .btn 
   button{
-    color: whie00;
+    color: white;
     background-color: #158eca;
     font-size: 40px;
     margin-top: 20px;
