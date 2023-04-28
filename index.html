@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>index</title>
-    <link rel="stylesheet" href="/css/final.css">
+    <link rel="stylesheet" href="final.css">
     <link rel="stylesheet" href="/js/wallet.js">
 
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
@@ -97,7 +97,8 @@
 
         <div class="slide">
           <div style="background-color:#dbf3ff;width:300px;height: 250px;border-radius: 5px; text-align:center;padding:7px;">
-            <h3 style="text-align: left;">Document.pdf</h3>
+            <h3 style="text-align: left;">Document.pdf</h3> 
+          
             <div style="text-align:center;padding:2px; margin:0 auto">
               <img src="/download.jpg" height="200px"; alt="" style="padding-top:5px;">
             </div>
@@ -199,8 +200,10 @@
 
             <!-----------------Upload BUtton ------------->
             <div class="btn">
-
-              <h1>Upload PDF to IPFS</h1>
+              <div class="head-btn">
+                <h1>Upload Your Documents</h1>
+              </div>
+              
               <input type="file" id="pdfInput">
               <button onclick="uploadPDF()">Upload</button>
               <p id="status"></p>
@@ -501,7 +504,7 @@
     console.log(`User address: ${address}`);
     document.getElementById("wallet").innerHTML=(address);
 
-  }
+
 
 
 
